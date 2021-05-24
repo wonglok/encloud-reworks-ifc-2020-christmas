@@ -37,8 +37,6 @@ export const effect = async (node) => {
     scene.remove(mesh);
   });
 
-  //
-
   let destination = new Vector3();
   node.in0.stream((ev) => {
     if (ev && ev.point) {
@@ -49,8 +47,6 @@ export const effect = async (node) => {
   node.onLoop(() => {
     mesh.position.lerp(destination, 0.05);
   });
-
-  //
 };
 
 //
