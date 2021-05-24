@@ -1,13 +1,21 @@
 export class ENMini {
-  constructor() {
+  constructor({ parentMini = false }) {
+    this.parentMini = parentMini;
     this.resource = new Map();
     this.get = (k) => {
       return new Promise((resolve) => {
         let ttt = 0;
         ttt = setInterval(() => {
-          if (this.resource.has(k)) {
-            clearInterval(ttt);
-            resolve(this.resource.get(k));
+          if (this.parentMini) {
+            if (this.resource.has(k) || this.parentMini.resource.has(k)) {
+              clearInterval(ttt);
+              resolve(this.resource.get(k) || this.parentMini.resource.get(k));
+            }
+          } else {
+            if (this.resource.has(k)) {
+              clearInterval(ttt);
+              resolve(this.resource.get(k));
+            }
           }
         });
       });
@@ -122,7 +130,11 @@ export class ENMini {
       {},
       {
         get: (obj, key) => {
-          return this.resource.get(key);
+          if (this.parentMini) {
+            return this.resource.get(key) || this.parentMini.resource.get(key);
+          } else {
+            return this.resource.get(key);
+          }
         },
       }
     );
@@ -130,4 +142,8 @@ export class ENMini {
 }
 
 // let mini = new Mini({ name: "base", domElement: ref.current, window });
+//
+
+//
+//
 //

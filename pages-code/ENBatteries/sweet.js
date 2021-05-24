@@ -10,7 +10,11 @@ import {
 export const title = "sweet";
 
 export const effect = async (node) => {
-  let { scene, camera, renderer, raycaster, mouse } = node.userData;
+  let scene = await node.ready.scene;
+  let camera = await node.ready.camera;
+  let renderer = await node.ready.gl;
+  let raycaster = await node.ready.raycaster;
+  let mouse = await node.ready.mouse;
 
   let mat = new MeshStandardMaterial({
     color: new Color("#ff0000"),
@@ -37,6 +41,8 @@ export const effect = async (node) => {
     scene.remove(mesh);
   });
 
+  //
+
   let destination = new Vector3();
   node.in0.stream((ev) => {
     if (ev && ev.point) {
@@ -47,6 +53,8 @@ export const effect = async (node) => {
   node.onLoop(() => {
     mesh.position.lerp(destination, 0.05);
   });
+
+  //
 };
 
 //

@@ -14,7 +14,13 @@ import * as GLSLTools from "./utils/utils.js";
 
 export const title = `${FolderName}.cylinder`;
 export const effect = async (node) => {
-  let { scene, camera, renderer, raycaster, mouse } = node.userData;
+  let scene = await node.ready.scene;
+  let camera = await node.ready.camera;
+  let renderer = await node.ready.gl;
+  let raycaster = await node.ready.raycaster;
+  let mouse = await node.ready.mouse;
+
+  //
 };
 
 export const CylinderInfo = ({

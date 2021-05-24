@@ -21,22 +21,19 @@ import { enableBloom } from "../../Bloom/Bloom";
 
 export const title = `${FolderName}.floor`;
 
-export const effect = (node) => {
-  //
-  let camera = node.userData.camera;
-  camera.position.y = 5;
-  camera.position.z = -5;
-  camera.lookAt(0, 0, 0);
-  setTimeout(() => {
-    camera.position.z = 0;
-  });
+export const effect = async (node) => {
+  let scene = await node.ready.scene;
+  let camera = await node.ready.camera;
+  let renderer = await node.ready.gl;
+  let raycaster = await node.ready.raycaster;
+  let mouse = await node.ready.mouse;
 
   new Floor({ node });
 
   window.addEventListener(
     "add-object-many-times",
     ({ detail: { birthPlace, cameraPosition } }) => {
-      new Item({ birthPlace, node, cameraPosition });
+      new Item({ node, birthPlace, cameraPosition });
     }
   );
 };
@@ -49,6 +46,12 @@ export class Item {
     this.setup();
   }
   async setup() {
+    let scene = await this.node.ready.scene;
+    let camera = await this.node.ready.camera;
+    let renderer = await this.node.ready.gl;
+    let raycaster = await this.node.ready.raycaster;
+    let mouse = await this.node.ready.mouse;
+
     let item = new Mesh(
       new SphereBufferGeometry(0.5, 32, 32),
       new MeshStandardMaterial({
@@ -60,13 +63,12 @@ export class Item {
 
     enableBloom(item);
 
-    //
-    console.log(this.birthPlace, this.cameraPosition);
     item.position.copy(this.birthPlace);
     item.lookAt(this.cameraPosition);
-    this.node.userData.scene.add(item);
+
+    scene.add(item);
     this.node.onClean(() => {
-      this.node.userData.scene.remove(item);
+      scene.remove(item);
     });
     //
   }
@@ -78,9 +80,15 @@ export class Floor {
     this.setup();
   }
   async setup() {
-    let renderer = this.node.userData.gl;
-    let scene = this.node.userData.scene;
-    let camera = this.node.userData.camera;
+    let scene = await this.node.ready.scene;
+    let camera = await this.node.ready.camera;
+    let renderer = await this.node.ready.gl;
+    let raycaster = await this.node.ready.raycaster;
+    let mouse = await this.node.ready.mouse;
+
+    // let renderer = this.node.userData.gl;
+    // let scene = this.node.userData.scene;
+    // let camera = this.node.userData.camera;
 
     //
     let o3 = new Object3D();
@@ -176,15 +184,15 @@ export class Floor {
       });
     };
     makeDoughnut();
-    let mouse = new Vector2(0, 0);
-    let raycaster = new Raycaster();
+    let mouseCenter = new Vector2(0, 0);
+    let raycasterSim = new Raycaster();
     let currentBornLocation = new Vector3(0, 0, 0);
     const scanCenter = () => {
-      mouse.x = 0.5 * 2 - 1;
-      mouse.y = -(0.5 + 0.0) * 2 + 1;
+      mouseCenter.x = 0.5 * 2 - 1;
+      mouseCenter.y = -(0.5 + 0.0) * 2 + 1;
 
-      raycaster.setFromCamera(mouse, camera);
-      var intersects = raycaster.intersectObjects(raycasterList);
+      raycasterSim.setFromCamera(mouseCenter, camera);
+      var intersects = raycasterSim.intersectObjects(raycasterList);
       for (var i = 0; i < intersects.length; i++) {
         let pt = intersects[i].point;
         currentBornLocation.copy(pt);
@@ -199,15 +207,16 @@ export class Floor {
 
     domElement.innerHTML = "Place Item";
     domElement.style.cssText = `
+      color: rgb(255 231 194);
+      background-color: rgb(33 162 191);
+
       position: absolute;
       bottom: 30px;
       left: calc(50% - 100px);
       padding: 10px 0px;
       width: 200px;
-      background-color: rgb(212 37 37);
       border-radius: 20px;
       text-align: center;
-      color: rgb(255 224 177);
       font-size: 25px;
       cursor: pointer;
     `;
@@ -265,16 +274,14 @@ export class Floor {
     let fakeCam = new Camera();
     fakeCam.position.copy(camera.position);
     fakeCam.rotation.copy(camera.rotation);
-    // fakeCam.lookAt(0, 0, 0);
+
     let controls = new OrbitControls(fakeCam, renderer.domElement);
-    // controls.target.y += camera.position.y;
+    controls.update();
+
     controls.enableDamping = true;
     controls.enablePan = false;
     controls.enableRotate = true;
     controls.enableZoom = false;
-
-    let camdir = new Vector3();
-    camera.getWorldDirection(camdir);
 
     this.node.onLoop(() => {
       controls.update();

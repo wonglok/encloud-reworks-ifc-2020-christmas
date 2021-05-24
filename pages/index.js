@@ -43,6 +43,10 @@ function EffectNode({ projectJSON }) {
       },
     });
 
+    Object.entries(three).forEach(([key, val]) => {
+      enRunTime.mini.set(key, val);
+    });
+
     return () => {
       enRunTime.mini.clean();
     };

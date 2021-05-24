@@ -15,7 +15,7 @@ export class ENRuntime {
       throw new Error("NEEDS Project JSON");
     }
     this.fallBackJSON = projectJSON;
-    this.mini = new ENMini();
+    this.mini = new ENMini({ name: "ENProjectRuntime" });
     this.encloud = new ENCloud({
       fallbackJSON: this.fallBackJSON,
       mini: this.mini,
@@ -216,7 +216,10 @@ export class CodeRuntime {
     this.parent = parent;
     let runtime = this;
 
-    this.mini = new ENMini({ name: "runtime" });
+    this.mini = new ENMini({
+      name: "ENGraphRuntime",
+      parentMini: this.parent.mini,
+    });
     this.mini.set("parent", parent);
     parent.mini.onLoop(() => {
       this.mini.work();
@@ -312,7 +315,7 @@ export class CodeRuntime {
         });
 
       let prom = [];
-      if (uFunc && uFunc.effect) {
+      if (uFunc && uFunc.effect && typeof uFunc.effect === "function") {
         let node = {
           onClean: (v) => {
             runtime.mini.onClean(v);
@@ -361,10 +364,6 @@ export class CodeRuntime {
     });
   }
 }
-//
-
-//
-
 //
 
 //

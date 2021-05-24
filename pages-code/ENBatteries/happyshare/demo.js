@@ -4,7 +4,13 @@ import { CylinderInfo } from "./cylinder";
 export const title = `${FolderName}.demo`;
 
 export const effect = async (node) => {
-  let { scene, camera, renderer, raycaster, mouse } = node.userData;
+  let scene = await node.ready.scene;
+  let camera = await node.ready.camera;
+  let renderer = await node.ready.gl;
+  let raycaster = await node.ready.raycaster;
+  let mouse = await node.ready.mouse;
+
+  //
 
   let info = new CylinderInfo({
     count: 10,
