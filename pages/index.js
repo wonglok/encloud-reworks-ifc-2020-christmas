@@ -87,8 +87,6 @@ export async function getStaticProps(context) {
   };
 }
 
-// https://hello-air.com/portfolio/ifc-mall-xmas-2020-glow-it-up/
-
 function WelcomeScreen() {
   let startGame = () => {
     if (canUseDeviceOrientationControls) {
