@@ -94,6 +94,7 @@ function WelcomeScreen() {
       authoriseOrientationCam();
     }
     HomeState.overlay = "none";
+    // initWebcam(document.querySelector("#videofeed"));
   };
 
   return (
@@ -139,7 +140,6 @@ function WelcomeScreen() {
               className="mb-1 text-2xl underline cursor-pointer"
               onClick={() => {
                 startGame();
-                initWebcam(document.querySelector("#videofeed"));
               }}
             >
               Start Game

@@ -258,44 +258,44 @@ export async function initWebcam(
   videoElement.play();
 }
 
-async function setupRendere({ gl, scene }) {
-  let renderer = gl;
+// async function setupRendere({ gl, scene }) {
+//   let renderer = gl;
 
-  let videoElement = document.querySelector("#videofeed");
+//   let videoElement = document.querySelector("#videofeed");
 
-  const camTexture_ = new VideoTexture(
-    videoElement || document.createElement("video")
-  );
-  camTexture_.encoding = sRGBEncoding;
-  const refMat = new MeshBasicMaterial({
-    side: DoubleSide,
-    color: 0xffffff,
-    map: camTexture_,
-  });
+//   const camTexture_ = new VideoTexture(
+//     videoElement || document.createElement("video")
+//   );
+//   camTexture_.encoding = sRGBEncoding;
+//   const refMat = new MeshBasicMaterial({
+//     side: DoubleSide,
+//     color: 0xffffff,
+//     map: camTexture_,
+//   });
 
-  const renderTargetRelfection = new WebGLCubeRenderTarget(256, {
-    format: RGBFormat,
-    generateMipmaps: true,
-    minFilter: LinearMipmapLinearFilter,
-    encoding: sRGBEncoding,
-  });
-  // renderTargetRelfection.mapping = CubeReflectionMapping;
-  // renderTargetRelfection.mapping = CubeRefractionMapping;
+//   const renderTargetRelfection = new WebGLCubeRenderTarget(256, {
+//     format: RGBFormat,
+//     generateMipmaps: true,
+//     minFilter: LinearMipmapLinearFilter,
+//     encoding: sRGBEncoding,
+//   });
+//   // renderTargetRelfection.mapping = CubeReflectionMapping;
+//   // renderTargetRelfection.mapping = CubeRefractionMapping;
 
-  // cubemap scene
-  const cubeMapScene = new Scene();
-  const cubeCamera = new CubeCamera(1, 1000, renderTargetRelfection);
-  const sphere = new SphereGeometry(100, 15, 15);
-  const sphereMesh = new Mesh(sphere, refMat);
-  sphereMesh.scale.set(-1, 1, 1);
-  sphereMesh.rotation.set(Math.PI, -Math.PI / 2, 0);
-  cubeMapScene.add(sphereMesh);
+//   // cubemap scene
+//   const cubeMapScene = new Scene();
+//   const cubeCamera = new CubeCamera(1, 1000, renderTargetRelfection);
+//   const sphere = new SphereGeometry(100, 15, 15);
+//   const sphereMesh = new Mesh(sphere, refMat);
+//   sphereMesh.scale.set(-1, 1, 1);
+//   sphereMesh.rotation.set(Math.PI, -Math.PI / 2, 0);
+//   cubeMapScene.add(sphereMesh);
 
-  cubeCamera.update(renderer, cubeMapScene);
+//   cubeCamera.update(renderer, cubeMapScene);
 
-  scene.environment = renderTargetRelfection.texture;
-  scene.background = camTexture_;
-}
+//   scene.environment = renderTargetRelfection.texture;
+//   scene.background = camTexture_;
+// }
 
 export function VideoMap() {
   let works = useRef({});
