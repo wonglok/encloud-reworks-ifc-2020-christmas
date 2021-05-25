@@ -217,62 +217,133 @@ export class Floor {
 
     //
 
+    let currentType = "tree";
+
     let parent = renderer.domElement.parentNode;
-    let domElement = document.createElement("div");
+    let makeButton = () => {
+      let button = document.createElement("div");
 
-    domElement.innerHTML = "Place Item";
-    domElement.style.cssText = `
-      color: rgb(255 231 194);
-      background-color: rgb(33 162 191);
+      button.innerHTML = "Place Item";
+      button.style.cssText = `
+        color: rgb(255 231 194);
+        background-color: rgb(33 162 191);
 
-      position: absolute;
-      bottom: 30px;
-      left: calc(50% - 100px);
-      padding: 10px 0px;
-      width: 200px;
-      border-radius: 20px;
-      text-align: center;
-      font-size: 25px;
-      cursor: pointer;
-    `;
+        position: absolute;
+        bottom: 30px;
+        left: calc(50% - 100px);
+        padding: 10px 0px;
+        width: 200px;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 25px;
+        cursor: pointer;
+      `;
 
-    //
+      parent.appendChild(button);
+      console.log(button);
+      this.node.onClean(() => {
+        button.remove();
+        //
+      });
 
-    parent.appendChild(domElement);
-    console.log(domElement);
-    this.node.onClean(() => {
-      domElement.remove();
+      window.addEventListener("on-stop-add", () => {
+        button.remove();
+      });
+
       //
-    });
-    window.addEventListener("on-stop-add", () => {
-      domElement.remove();
-    });
-    //
-    let onClickAdd = () => {
-      window.dispatchEvent(
-        new CustomEvent("add-object-many-times", {
-          detail: {
-            birthPlace: currentBornLocation.clone(),
-            cameraPosition: camera.position.clone(),
-          },
-        })
-      );
+      let onClickAdd = () => {
+        window.dispatchEvent(
+          new CustomEvent("add-object-many-times", {
+            detail: {
+              type: currentType,
+              birthPlace: currentBornLocation.clone(),
+              cameraPosition: camera.position.clone(),
+            },
+          })
+        );
 
-      // //
-      // //
-      // domElement.remove();
-      // domElement.removeEventListener("click", onClickAdd);
-      // // domElement.removeEventListener("touchstart", onClickAdd);
-      // window.dispatchEvent(
-      //   new CustomEvent("on-stop-add", {
-      //     detail: {
-      //       birthPlace: currentBornLocation.clone(),
-      //       cameraPosition: camera.position.clone(),
-      //     },
-      //   })
-      // );
+        // //
+        // //
+        // domElement.remove();
+        // domElement.removeEventListener("click", onClickAdd);
+        // // domElement.removeEventListener("touchstart", onClickAdd);
+        // window.dispatchEvent(
+        //   new CustomEvent("on-stop-add", {
+        //     detail: {
+        //       birthPlace: currentBornLocation.clone(),
+        //       cameraPosition: camera.position.clone(),
+        //     },
+        //   })
+        // );
+      };
+      button.addEventListener("click", onClickAdd);
+      //
     };
-    domElement.addEventListener("click", onClickAdd);
+
+    makeButton();
+
+    let makeButtonChoose = ({ text, type, offset = 0 }) => {
+      let button = document.createElement("div");
+
+      button.innerHTML = text;
+      button.style.cssText = `
+        color: rgb(255, 231, 194);
+        background-color: rgba(33, 162, 191, 0.5);
+
+        position: absolute;
+        bottom: 130px;
+        left: calc(50% - 100px / 2 + ${offset}px);
+        padding: 10px 0px;
+        width: 100px;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 15px;
+        cursor: pointer;
+      `;
+      window.addEventListener("reload-css", () => {
+        button.style.cssText = `
+          color: rgb(255, 231, 194);
+          background-color: rgba(33, 162, 191, ${
+            currentType === type ? 1 : 0.5
+          });
+
+          position: absolute;
+          bottom: 130px;
+          left: calc(50% - 100px / 2 + ${offset}px);
+          padding: 10px 0px;
+          width: 100px;
+          border-radius: 20px;
+          text-align: center;
+          font-size: 15px;
+          cursor: pointer;
+        `;
+      });
+
+      parent.appendChild(button);
+      console.log(button);
+      this.node.onClean(() => {
+        button.remove();
+        //
+      });
+
+      window.addEventListener("on-stop-add", () => {
+        button.remove();
+      });
+
+      //
+      let onClickAdd = () => {
+        currentType = type;
+
+        window.dispatchEvent(new CustomEvent("reload-css"));
+      };
+      window.dispatchEvent(new CustomEvent("reload-css"));
+      button.addEventListener("click", onClickAdd);
+      //
+    };
+    makeButtonChoose({ offset: 130, text: "tree", type: "tree" });
+    makeButtonChoose({ offset: 0, text: "house", type: "house" });
+    makeButtonChoose({ offset: -130, text: "snowman", type: "snowman" });
+
     // domElement.addEventListener("touchstart", addItemOnce);
 
     let stopScanning = false;

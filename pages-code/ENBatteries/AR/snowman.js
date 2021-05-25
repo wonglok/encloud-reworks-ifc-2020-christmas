@@ -3,7 +3,7 @@ import { GLTFLoader, SkeletonUtils } from "three-stdlib";
 import { FolderName } from ".";
 import { enableBloom } from "../../Bloom/Bloom";
 
-export const title = `${FolderName}.tree`;
+export const title = `${FolderName}.snowman`;
 
 let ProviderCache = new Map();
 let provideURL = (Loader, url) =>
@@ -34,7 +34,7 @@ let sleep = (t) => {
 // preload
 provideURL(
   GLTFLoader,
-  "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_Xmas_tree_V26.glb"
+  "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_XMas_snowman_1112.glb"
 );
 
 export const effect = async (node) => {
@@ -48,12 +48,12 @@ export const effect = async (node) => {
     node,
     "add-object-many-times",
     async ({ detail: { type, birthPlace, cameraPosition } }) => {
-      if (type !== "tree") {
+      if (type !== "snowman") {
         return;
       }
       let tree = await provideURL(
         GLTFLoader,
-        "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_Xmas_tree_V26.glb"
+        "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_XMas_snowman_1112.glb"
       );
 
       let cloned = SkeletonUtils.clone(tree.scene);
