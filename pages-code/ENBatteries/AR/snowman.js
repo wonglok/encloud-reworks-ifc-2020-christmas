@@ -80,7 +80,7 @@ export const effect = async (node) => {
         }
         if (item.material) {
           item.material.roughness = 0.8;
-          item.material.metalness = 0.05;
+          item.material.metalness = 0.01;
         }
       });
 
