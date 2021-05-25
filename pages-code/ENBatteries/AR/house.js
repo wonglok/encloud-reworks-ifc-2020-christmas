@@ -51,6 +51,8 @@ export const effect = async (node) => {
       if (type !== "house") {
         return;
       }
+
+      //
       let tree = await provideURL(
         GLTFLoader,
         "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_XMas_2020_house_1112c.glb"

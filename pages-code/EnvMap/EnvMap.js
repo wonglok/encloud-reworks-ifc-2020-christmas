@@ -6,7 +6,7 @@ import { PMREMGenerator, TextureLoader } from "three";
 export function EnvMap() {
   // let RGBELoader = require("three/examples/jsm/loaders/RGBELoader.js")
   //   .RGBELoader;
-  let url = `/texture/shanghai_bund.jpg`;
+  let url = `/hdr/night.jpg`;
   let { scene, gl } = useThree();
   // let chroma = new ShaderCubeChrome({ res: 128, renderer: gl });
   // useEffect((state, dt) => {

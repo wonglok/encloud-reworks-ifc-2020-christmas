@@ -10,6 +10,7 @@ import {
   makeShallowStore,
 } from "../pages-code/ENCloudSDK/ENUtils";
 import { EnvMap } from "../pages-code/EnvMap/EnvMap";
+import { initWebcam, VideoMap } from "../pages-code/EnvMap/VideoEnvMap";
 
 let getProjectJSON = () => {
   return {
@@ -138,6 +139,7 @@ function WelcomeScreen() {
               className="mb-1 text-2xl underline cursor-pointer"
               onClick={() => {
                 startGame();
+                initWebcam(document.querySelector("#videofeed"));
               }}
             >
               Start Game
@@ -178,12 +180,21 @@ export default function Home({ buildTimeCache }) {
         <ambientLight intensity={0.2}></ambientLight>
 
         {/*  */}
-        <EnvMap></EnvMap>
-
-        <gridHelper args={[100, 50]}></gridHelper>
+        {/* <EnvMap></EnvMap> */}
+        <VideoMap></VideoMap>
+        {/* <gridHelper args={[100, 50]}></gridHelper> */}
 
         <Bloom></Bloom>
       </Canvas>
+
+      {/*  */}
+      <video
+        style={{ zIndex: "-1", opacity: 0.000001 }}
+        className=" absolute top-0 bottom-0 left-0 z-auto"
+        muted
+        playsInline
+        id="videofeed"
+      ></video>
 
       {HomeState.overlay === "welcome" && <WelcomeScreen></WelcomeScreen>}
     </div>
