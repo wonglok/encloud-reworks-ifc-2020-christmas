@@ -281,11 +281,6 @@ export class Floor {
           }
         }
       );
-      // this.node.onLoop(() => {
-      //   if (deviceRotationQ) {
-      //     camera.quaternion.slerp(deviceRotationQ, 0.1);
-      //   }
-      // });
     } else {
       let fakeCam = new Camera();
       fakeCam.position.copy(camera.position);
