@@ -299,6 +299,7 @@ export class Floor {
         text-align: center;
         font-size: 15px;
         cursor: pointer;
+        user-select: none;
       `;
       window.addEventListener("reload-css", () => {
         button.style.cssText = `
@@ -316,6 +317,7 @@ export class Floor {
           text-align: center;
           font-size: 15px;
           cursor: pointer;
+          user-select: none;
         `;
       });
 
