@@ -40,10 +40,6 @@ let loadBattriesInFolder = () => {
 function EffectNode({ projectJSON }) {
   let three = useThree();
 
-  three.camera.position.z = -7.5;
-  three.camera.position.y = 5.5;
-  three.camera.lookAt(0, 0, 0);
-
   useEffect(() => {
     let enRunTime = new ENRuntime({
       projectJSON: projectJSON,

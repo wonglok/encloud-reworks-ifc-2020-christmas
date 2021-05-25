@@ -23,11 +23,15 @@ import { canUseDeviceOrientationControls } from "../../ENCloudSDK/ENUtils";
 export const title = `${FolderName}.floor`;
 
 export const effect = async (node) => {
-  let scene = await node.ready.scene;
   let camera = await node.ready.camera;
+  let scene = await node.ready.scene;
   let renderer = await node.ready.gl;
   let raycaster = await node.ready.raycaster;
   let mouse = await node.ready.mouse;
+
+  camera.position.z = -7.5;
+  camera.position.y = 5.5;
+  camera.lookAt(0, 0, 0);
 
   new Floor({ node });
 
