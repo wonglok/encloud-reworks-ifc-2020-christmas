@@ -17,3 +17,6 @@
 ## Reworks Credit
 
 - Logic Redesign: Lok Lok
+
+## Copyright
+All 3D Content are copyrighted.
