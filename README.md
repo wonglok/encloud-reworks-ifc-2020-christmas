@@ -20,3 +20,8 @@
 
 ## Copyright
 All 3D Content are copyrighted.
+
+## License 
+The Code inside this repository is MIT Licensed.
+
+https://opensource.org/licenses/MIT
