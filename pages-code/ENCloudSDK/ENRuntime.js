@@ -35,10 +35,6 @@ export class ENRuntime {
 
     //
     let runtimes = [];
-    let Signatures = {
-      now: "now",
-      last: "last",
-    };
 
     //
     let getSignature = () => {
@@ -53,6 +49,11 @@ export class ENRuntime {
           return [e._id, e.input._id, e.output._id];
         }),
       });
+    };
+
+    let Signatures = {
+      now: getSignature(),
+      last: getSignature(),
     };
 
     let handleArrival = ({ detail }) => {

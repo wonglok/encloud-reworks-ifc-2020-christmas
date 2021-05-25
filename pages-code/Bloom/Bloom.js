@@ -18,10 +18,6 @@ export const enableBloom = (item) => {
   item.layers.enable(BLOOM_SCENE);
 };
 
-/*
-
-*/
-
 export default function Bloom() {
   // let tool = useTools();
   let { gl, size, scene, camera } = useThree();

@@ -187,6 +187,8 @@ export default function Home({ buildTimeCache }) {
         <EnvMap></EnvMap>
 
         <gridHelper args={[100, 100]}></gridHelper>
+
+        <Bloom></Bloom>
       </Canvas>
 
       {HomeState.overlay === "welcome" && <WelcomeScreen></WelcomeScreen>}

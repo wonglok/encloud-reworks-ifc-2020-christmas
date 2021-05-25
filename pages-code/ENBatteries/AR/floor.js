@@ -31,12 +31,12 @@ export const effect = async (node) => {
 
   new Floor({ node });
 
-  window.addEventListener(
-    "add-object-many-times",
-    ({ detail: { birthPlace, cameraPosition } }) => {
-      new Item({ node, birthPlace, cameraPosition });
-    }
-  );
+  // window.addEventListener(
+  //   "add-object-many-times",
+  //   ({ detail: { birthPlace, cameraPosition } }) => {
+  //     new Item({ node, birthPlace, cameraPosition });
+  //   }
+  // );
 };
 
 export class Item {
