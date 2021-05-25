@@ -5,7 +5,7 @@ import { PMREMGenerator, TextureLoader } from "three";
 export function EnvMap() {
   // let RGBELoader = require("three/examples/jsm/loaders/RGBELoader.js")
   //   .RGBELoader;
-  let url = `/texture/adams_place_bridge_1k.png`;
+  let url = `/texture/shanghai_bund.jpg`;
   let { scene, gl } = useThree();
   // let chroma = new ShaderCubeChrome({ res: 128, renderer: gl });
   // useEffect((state, dt) => {
@@ -21,6 +21,7 @@ export function EnvMap() {
     // loader.setDataType(UnsignedByteType);
     loader.load(url, (texture) => {
       const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+      scene.background = envMap;
       scene.environment = envMap;
     });
 
