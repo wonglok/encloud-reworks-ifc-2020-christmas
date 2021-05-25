@@ -32,7 +32,10 @@ let sleep = (t) => {
 };
 
 // preload
-provideURL(GLTFLoader, "/glb/IFC_Xmas_tree_V26.glb");
+provideURL(
+  GLTFLoader,
+  "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_Xmas_tree_V26.glb"
+);
 
 export const effect = async (node) => {
   let scene = await node.ready.scene;
@@ -45,7 +48,10 @@ export const effect = async (node) => {
     node,
     "add-object-many-times",
     async ({ detail: { birthPlace, cameraPosition } }) => {
-      let tree = await provideURL(GLTFLoader, "/glb/IFC_Xmas_tree_V26.glb");
+      let tree = await provideURL(
+        GLTFLoader,
+        "https://res.cloudinary.com/loklok-keystone/image/upload/v1621907814/copyrighted-air-concepts/ifc2020-christmas/IFC_Xmas_tree_V26.glb"
+      );
 
       let cloned = SkeletonUtils.clone(tree.scene);
       cloned.position.copy(birthPlace);
