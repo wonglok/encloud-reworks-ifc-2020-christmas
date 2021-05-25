@@ -78,6 +78,10 @@ export const effect = async (node) => {
       node.onLoop((tt, dt) => {
         mixer.update(dt);
       });
+      node.onClean(() => {
+        mixer.stopAllAction();
+        mixer.uncacheRoot(cloned);
+      });
 
       // Start
       // Event
@@ -97,18 +101,24 @@ export const effect = async (node) => {
           tree.animations.find((e) => e.name.toLowerCase() === "loopend"),
           cloned
         ),
-        mixer.clipAction(
-          tree.animations.find((e) => e.name.toLowerCase() === "idle"),
-          cloned
-        ),
       ];
 
-      for (let action of actions) {
-        action.clampWhenFinished = true;
-        action.repetitions = 1;
-        action.play();
-        await sleep(action.getClip().duration * 1000 - 16.667);
-      }
+      let canAgain = true;
+      let doAll = async () => {
+        for (let action of actions) {
+          action.clampWhenFinished = true;
+          action.repetitions = 1;
+          action.play();
+          await sleep(action.getClip().duration * 1000 - 16.667);
+        }
+        if (canAgain) {
+          await doAll();
+        }
+      };
+      node.onClean(() => {
+        canAgain = false;
+      });
+      doAll();
     }
   );
 };
