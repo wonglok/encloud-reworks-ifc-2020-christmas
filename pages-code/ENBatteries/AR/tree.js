@@ -79,7 +79,6 @@ export const effect = async (node) => {
         mixer.update(dt);
       });
 
-      console.log(tree.animations);
       // Start
       // Event
       // loopend
@@ -108,7 +107,7 @@ export const effect = async (node) => {
         action.clampWhenFinished = true;
         action.repetitions = 1;
         action.play();
-        await sleep(action.getClip().duration * 1000);
+        await sleep(action.getClip().duration * 1000 - 16.667);
       }
     }
   );
