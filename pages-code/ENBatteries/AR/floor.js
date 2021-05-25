@@ -1,23 +1,23 @@
 import {
-  BoxBufferGeometry,
+  // BoxBufferGeometry,
   Camera,
   CircleBufferGeometry,
   Color,
   Mesh,
   MeshBasicMaterial,
-  MeshStandardMaterial,
+  // MeshStandardMaterial,
   Object3D,
   PlaneBufferGeometry,
   Raycaster,
   RingBufferGeometry,
   ShaderMaterial,
-  SphereBufferGeometry,
+  // SphereBufferGeometry,
   Vector2,
   Vector3,
 } from "three";
 import { OrbitControls } from "three-stdlib";
 import { FolderName } from ".";
-import { enableBloom } from "../../Bloom/Bloom";
+// import { enableBloom } from "../../Bloom/Bloom";
 import { canUseDeviceOrientationControls } from "../../ENCloudSDK/ENUtils";
 
 export const title = `${FolderName}.floor`;
@@ -44,41 +44,41 @@ export const effect = async (node) => {
   // );
 };
 
-export class Item {
-  constructor({ node, birthPlace, cameraPosition }) {
-    this.node = node;
-    this.birthPlace = birthPlace;
-    this.cameraPosition = cameraPosition;
-    this.setup();
-  }
-  async setup() {
-    let scene = await this.node.ready.scene;
-    let camera = await this.node.ready.camera;
-    let renderer = await this.node.ready.gl;
-    let raycaster = await this.node.ready.raycaster;
-    let mouse = await this.node.ready.mouse;
+// export class Item {
+//   constructor({ node, birthPlace, cameraPosition }) {
+//     this.node = node;
+//     this.birthPlace = birthPlace;
+//     this.cameraPosition = cameraPosition;
+//     this.setup();
+//   }
+//   async setup() {
+//     let scene = await this.node.ready.scene;
+//     let camera = await this.node.ready.camera;
+//     let renderer = await this.node.ready.gl;
+//     let raycaster = await this.node.ready.raycaster;
+//     let mouse = await this.node.ready.mouse;
 
-    let item = new Mesh(
-      new SphereBufferGeometry(0.5, 32, 32),
-      new MeshStandardMaterial({
-        metalness: 1.0,
-        roughness: 0.1,
-      })
-    );
-    item.position.y += 0.5;
+//     let item = new Mesh(
+//       new SphereBufferGeometry(0.5, 32, 32),
+//       new MeshStandardMaterial({
+//         metalness: 1.0,
+//         roughness: 0.1,
+//       })
+//     );
+//     item.position.y += 0.5;
 
-    enableBloom(item);
+//     enableBloom(item);
 
-    item.position.copy(this.birthPlace);
-    item.lookAt(this.cameraPosition);
+//     item.position.copy(this.birthPlace);
+//     item.lookAt(this.cameraPosition);
 
-    scene.add(item);
-    this.node.onClean(() => {
-      scene.remove(item);
-    });
-    //
-  }
-}
+//     scene.add(item);
+//     this.node.onClean(() => {
+//       scene.remove(item);
+//     });
+//     //
+//   }
+// }
 
 export class Floor {
   constructor({ node }) {

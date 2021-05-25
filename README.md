@@ -23,9 +23,11 @@ https://hello-air.com/portfolio/ifc-mall-xmas-2020-glow-it-up/
 - Logic Redesign: Lok Lok
 
 ## Copyright
-All 3D Content are copyrighted.
 
-## License 
+All 3D Media Content are Copy Righted.
+
+## License
+
 The Code inside this repository is MIT Licensed.
 
 https://opensource.org/licenses/MIT
