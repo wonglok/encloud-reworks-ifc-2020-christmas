@@ -303,15 +303,15 @@ export function VideoMap() {
 
   useEffect(() => {
     const loader = new CubeTextureLoader();
-    loader.setPath("/hdr/env/");
+    loader.setPath("/hdr/env_night/");
 
     const cubeTex = loader.load([
-      "px.jpg",
-      "nx.jpg",
-      "py.jpg",
-      "ny.jpg",
-      "pz.jpg",
-      "nz.jpg",
+      "px.png",
+      "nx.png",
+      "py.png",
+      "ny.png",
+      "pz.png",
+      "nz.png",
     ]);
 
     cubeTex.encoding = sRGBEncoding;

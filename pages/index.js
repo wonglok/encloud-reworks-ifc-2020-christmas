@@ -177,7 +177,7 @@ export default function Home({ buildTimeCache }) {
         {/* <EnvMap></EnvMap> */}
         <VideoMap></VideoMap>
 
-        <gridHelper args={[100, 50]}></gridHelper>
+        {/* <gridHelper args={[100, 50]}></gridHelper> */}
 
         <Bloom></Bloom>
       </Canvas>

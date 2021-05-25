@@ -428,7 +428,7 @@ export class Floor {
 
       // light.shadow.camera.updateProjectionMatrix();
 
-      console.log(light.shadow.camera);
+      // console.log(light.shadow.camera);
       this.node.onLoop(() => {
         light.shadow.camera.position.copy(camera.position);
         light.shadow.camera.rotation.copy(camera.rotation);
@@ -446,15 +446,16 @@ export class Floor {
       plane.position.y = -0.01;
 
       scene.add(plane);
-
-      //Create a helper for the shadow camera (optional)
-      const helper = new CameraHelper(light.shadow.camera);
-      scene.add(helper);
-
       this.node.onClean(() => {
-        scene.remove(helper);
         scene.remove(plane);
       });
+
+      //Create a helper for the shadow camera (optional)
+      // const helper = new CameraHelper(light.shadow.camera);
+      // scene.add(helper);
+      // this.node.onClean(() => {
+      //   scene.remove(helper);
+      // });
     };
 
     dirLightShadow();
