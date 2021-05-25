@@ -1,4 +1,4 @@
-import { AnimationMixer } from "three";
+import { AnimationMixer, Color } from "three";
 import { GLTFLoader, SkeletonUtils } from "three-stdlib";
 import { FolderName } from ".";
 import { enableBloom } from "../../Bloom/Bloom";
@@ -77,6 +77,10 @@ export const effect = async (node) => {
 
         if (item.material) {
           item.castShadow = true;
+        }
+        if (item.material) {
+          item.material.roughness = 0.8;
+          item.material.metalness = 0.05;
         }
       });
 
