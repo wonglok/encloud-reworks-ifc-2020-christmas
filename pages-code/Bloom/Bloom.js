@@ -144,7 +144,10 @@ export default function Bloom() {
   }, []);
 
   // let materials = {};
-  const darkMaterial = new MeshBasicMaterial({ color: "black" });
+  const darkMaterial = new MeshBasicMaterial({
+    color: "black",
+    skinning: true,
+  });
 
   const bloomLayer = new Layers();
   bloomLayer.set(BLOOM_SCENE);
@@ -171,11 +174,14 @@ export default function Bloom() {
 
   let run = (dt) => {
     let origBG = scene.background;
+
     //
+    gl.shadowMap.enabled = false;
     scene.background = null;
     scene.traverse(darkenNonBloomed);
     bloomComposer.render(dt);
     //
+    gl.shadowMap.enabled = true;
     scene.background = origBG;
     scene.traverse(restoreMaterial);
     finalComposer.render(dt);

@@ -76,6 +76,9 @@ export const effect = async (node) => {
         ) {
           enableBloom(item);
         }
+        if (item.material) {
+          item.castShadow = true;
+        }
       });
 
       scene.add(cloned);
@@ -91,7 +94,6 @@ export const effect = async (node) => {
       });
       node.onClean(() => {
         mixer.stopAllAction();
-        mixer.uncacheRoot(cloned);
       });
 
       // Start

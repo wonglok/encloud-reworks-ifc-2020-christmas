@@ -171,18 +171,13 @@ export default function Home({ buildTimeCache }) {
         ></EffectNode>
 
         {/*  */}
-        <directionalLight
-          position={[10, 10, 10]}
-          intensity={0.2}
-        ></directionalLight>
-
-        {/*  */}
         <ambientLight intensity={0.2}></ambientLight>
 
         {/*  */}
         {/* <EnvMap></EnvMap> */}
         <VideoMap></VideoMap>
-        {/* <gridHelper args={[100, 50]}></gridHelper> */}
+
+        <gridHelper args={[100, 50]}></gridHelper>
 
         <Bloom></Bloom>
       </Canvas>

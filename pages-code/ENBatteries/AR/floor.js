@@ -5,15 +5,21 @@ import {
   Color,
   Mesh,
   MeshBasicMaterial,
-  // MeshStandardMaterial,
+  ShadowMaterial,
+  MeshStandardMaterial,
   Object3D,
   PlaneBufferGeometry,
   Raycaster,
   RingBufferGeometry,
   ShaderMaterial,
+  DirectionalLight,
+  CameraHelper,
+  AdditiveBlending,
   // SphereBufferGeometry,
   Vector2,
   Vector3,
+  PCFSoftShadowMap,
+  SphereBufferGeometry,
 } from "three";
 import { OrbitControls } from "three-stdlib";
 import { FolderName } from ".";
@@ -237,6 +243,7 @@ export class Floor {
         text-align: center;
         font-size: 25px;
         cursor: pointer;
+        user-select: none;
       `;
 
       parent.appendChild(button);
@@ -386,5 +393,70 @@ export class Floor {
         camera.rotation.copy(fakeCam.rotation);
       });
     }
+
+    //
+
+    let dirLightShadow = () => {
+      //Create a WebGLRenderer and turn on shadows in the renderer
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = PCFSoftShadowMap; // default PCFShadowMap
+      // renderer.shadowMap.type = PCFShadowMap; // default PCFShadowMap
+
+      //Create a DirectionalLight and turn on shadows for the light
+      const light = new DirectionalLight(0xffffff, 0.1);
+      light.castShadow = true; // default false
+      scene.add(light);
+      this.node.onClean(() => {
+        scene.remove(light);
+      });
+
+      light.position.x = 100;
+      light.position.y = 100;
+      light.position.z = 0;
+
+      //Set up shadow properties for the light
+      light.shadow.radius = 2;
+      light.shadow.mapSize.width = 256; // default
+      light.shadow.mapSize.height = 256; // default
+      light.shadow.camera.near = 0.1; // default
+      light.shadow.camera.far = light.position.length() * 1.5; // default
+
+      light.shadow.camera.left = -50;
+      light.shadow.camera.right = 50;
+      light.shadow.camera.top = 50;
+      light.shadow.camera.bottom = -50;
+
+      // light.shadow.camera.updateProjectionMatrix();
+
+      console.log(light.shadow.camera);
+      this.node.onLoop(() => {
+        light.shadow.camera.position.copy(camera.position);
+        light.shadow.camera.rotation.copy(camera.rotation);
+      });
+
+      //Create a plane that receives shadows (but does not cast them)
+      const planeGeometry = new PlaneBufferGeometry(500, 500, 2, 2);
+      planeGeometry.rotateX(Math.PI * -0.5);
+
+      const planeMaterial = new ShadowMaterial({
+        opacity: 0.5,
+      });
+      const plane = new Mesh(planeGeometry, planeMaterial);
+      plane.receiveShadow = true;
+      plane.position.y = -0.01;
+
+      scene.add(plane);
+
+      //Create a helper for the shadow camera (optional)
+      const helper = new CameraHelper(light.shadow.camera);
+      scene.add(helper);
+
+      this.node.onClean(() => {
+        scene.remove(helper);
+        scene.remove(plane);
+      });
+    };
+
+    dirLightShadow();
   }
 }
