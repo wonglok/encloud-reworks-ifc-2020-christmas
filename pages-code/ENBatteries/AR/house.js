@@ -121,7 +121,9 @@ export const effect = async (node) => {
           await sleep(action.getClip().duration * 1000 - 16.667);
         }
         if (canAgain) {
-          actions.forEach((a) => a.reset());
+          actions.forEach((a) => {
+            a.reset();
+          });
           await doAll();
         }
       };
