@@ -18,6 +18,7 @@ import {
 import { OrbitControls } from "three-stdlib";
 import { FolderName } from ".";
 import { enableBloom } from "../../Bloom/Bloom";
+import { canUseDeviceOrientationControls } from "../../ENCloudSDK/ENUtils";
 
 export const title = `${FolderName}.floor`;
 
@@ -271,29 +272,37 @@ export class Floor {
       stopScanning = true;
     });
 
-    let fakeCam = new Camera();
-    fakeCam.position.copy(camera.position);
-    fakeCam.rotation.copy(camera.rotation);
+    if (canUseDeviceOrientationControls) {
+      window.addEventListener(
+        "camera-rotation",
+        ({ detail: { rotation, quaternion } }) => {
+          if (quaternion) {
+            camera.quaternion.slerp(quaternion, 0.2);
+          }
+        }
+      );
+      // this.node.onLoop(() => {
+      //   if (deviceRotationQ) {
+      //     camera.quaternion.slerp(deviceRotationQ, 0.1);
+      //   }
+      // });
+    } else {
+      let fakeCam = new Camera();
+      fakeCam.position.copy(camera.position);
+      fakeCam.rotation.copy(camera.rotation);
 
-    let controls = new OrbitControls(fakeCam, renderer.domElement);
-    controls.update();
-
-    controls.enableDamping = true;
-    controls.enablePan = false;
-    controls.enableRotate = true;
-    controls.enableZoom = false;
-
-    this.node.onLoop(() => {
+      let controls = new OrbitControls(fakeCam, renderer.domElement);
       controls.update();
-      camera.rotation.copy(fakeCam.rotation);
-      // fakeCam.position.copy(camera.position);
-      // if (controls && controls.target) {
-      //   controls.target.set(
-      //     camera.position.x + camdir.x,
-      //     camera.position.y + camdir.y,
-      //     camera.position.z + camdir.z
-      //   );
-      // }
-    });
+
+      controls.enableDamping = true;
+      controls.enablePan = false;
+      controls.enableRotate = true;
+      controls.enableZoom = false;
+
+      this.node.onLoop(() => {
+        controls.update();
+        camera.rotation.copy(fakeCam.rotation);
+      });
+    }
   }
 }
