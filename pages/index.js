@@ -182,7 +182,7 @@ export default function Home({ buildTimeCache }) {
         {/*  */}
         <EnvMap></EnvMap>
 
-        <gridHelper args={[100, 100]}></gridHelper>
+        <gridHelper args={[100, 50]}></gridHelper>
 
         <Bloom></Bloom>
       </Canvas>

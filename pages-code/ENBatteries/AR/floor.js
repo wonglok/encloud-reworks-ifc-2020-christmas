@@ -187,6 +187,15 @@ export class Floor {
         circle.scale.set(0.0, 0.0, 0.0);
         cubeMat.opacity = 0.0;
       });
+
+      this.node.onClean(() => {
+        cube.visible = false;
+        circle.visible = false;
+
+        cube.scale.set(0.0, 0.0, 0.0);
+        circle.scale.set(0.0, 0.0, 0.0);
+        cubeMat.opacity = 0.0;
+      });
     };
     makeDoughnut();
     let mouseCenter = new Vector2(0, 0);
