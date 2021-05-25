@@ -16,7 +16,7 @@
 
 ## Links
 
-https://hello-air.com/portfolio/ifc-mall-xmas-2020-glow-it-up/
+[Air Concept Portfolio](https://hello-air.com/portfolio/ifc-mall-xmas-2020-glow-it-up/)
 
 ## Reworks Credit
 
@@ -30,4 +30,4 @@ All 3D Media Content are Copy Righted.
 
 The Code inside this repository is MIT Licensed.
 
-https://opensource.org/licenses/MIT
+[MIT License](https://opensource.org/licenses/MIT)
