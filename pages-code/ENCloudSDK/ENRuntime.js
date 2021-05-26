@@ -76,10 +76,10 @@ export class ENRuntime {
       });
 
       if (Signatures.last !== Signatures.now) {
-        Signatures.last = Signatures.now;
+        Signatures.now = getSignature();
+        Signatures.last = getSignature();
         window.dispatchEvent(new CustomEvent("remake-graph"));
       }
-      Signatures.now = getSignature();
     };
 
     let handleOnSave = () => {
